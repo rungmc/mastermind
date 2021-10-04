@@ -9,11 +9,10 @@ Mastermind is a code-breaking game where one player sets a code and the
 other has a fixed number of attempts to correctly guess the sequence in
 order.
 
-After each guess, the guesser receives a visual indicator of how close
-they were to a correct answer.  A _ indicates that one of your guessed
-colors/numbers was in the code but not in the right location.  A __
-indicates that you nailed the exact location of a number/color in
-sequence.
+After each guess, the codebreaker receives a visual indicator of how close
+they were to a correct answer.  A 'o' indicates that one of your guessed
+colors/numbers was in the code but not in the right location.  A 'O'
+indicates that you nailed the exact location of a number/color in sequence.
 
 Enter '1' to play as the codebreaker or '2' to be the codemaker:
     INSTRUCTIONS
@@ -43,7 +42,9 @@ Enter '1' to play as the codebreaker or '2' to be the codemaker:
     puts 'Congratulations! You guessed the code!'
   end
 
-  def defeat
-    puts 'You failed to guess the code!'
+  def defeat(answer)
+    result = ''
+    answer.each { |num| result += num.to_s + ' ' }
+    puts "You failed to guess the code! The code was: #{result}"
   end
 end

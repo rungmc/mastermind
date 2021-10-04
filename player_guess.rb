@@ -7,9 +7,9 @@ class PlayerGuess
 
   def initialize
     @attempts = 12
-    num_gen = Random.new
-    @answer = [num_gen.rand(1..6),num_gen.rand(1..6),
-      num_gen.rand(1..6),num_gen.rand(1..6)]
+    @num_gen = Random.new
+    @answer = [@num_gen.rand(1..6),@num_gen.rand(1..6),
+      @num_gen.rand(1..6),@num_gen.rand(1..6)]
     @guess = []
   end
 
@@ -22,7 +22,7 @@ class PlayerGuess
     if won?
       victory
     else
-      defeat
+      defeat(@answer)
     end
   end
 

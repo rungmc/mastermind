@@ -1,4 +1,5 @@
 require_relative 'display'
+require 'pry-byebug'
 
 # Game logic for player guesser.
 class PlayerGuess
@@ -6,7 +7,9 @@ class PlayerGuess
 
   def initialize
     @attempts = 12
-    @answer = [1,2,3,4]
+    num_gen = Random.new
+    @answer = [num_gen.rand(1..6),num_gen.rand(1..6),
+      num_gen.rand(1..6),num_gen.rand(1..6)]
     @guess = []
   end
 
@@ -28,15 +31,14 @@ class PlayerGuess
   def game_loop
     attempts_remaining(@attempts)
     @attempts -= 1
-    input = gets.chomp.split('').map! { |str| str.to_i }
+    @guess = gets.chomp.split('').map! { |str| str.to_i }
 
-    until valid_input?(input)
-      @display.invalid_input
-      input = gets.chomp.split('').map! { |str| str.to_i }
+    until valid_input?(@guess)
+      invalid_input
+      @guess = gets.chomp.split('').map! { |str| str.to_i }
     end
 
-    @guess = input
-    draw_guess(@guess, KeyPegs.new.generate(@guess, @answer))
+    draw_result(@guess, KeyPegs.new.generate(@guess.dup, @answer.dup))
   end
 
   def valid_input?(input)
@@ -44,6 +46,6 @@ class PlayerGuess
   end
 
   def won?
-    @guess.code_pegs == @answer.code_pegs
+    @guess == @answer
   end
 end

@@ -31,8 +31,12 @@ Enter '1' to play as the codebreaker or '2' to be the codemaker:
     puts 'Invalid guess! Try again (e.g., 1234):'
   end
 
-  def draw_guess(guess, pegs)
-    puts guess.code_pegs, pegs
+  def draw_result(guess, pegs)
+    result = ''
+    guess.each { |num| result += num.to_s + ' ' }
+    result += '     '
+    pegs.each { |peg| result += peg.to_s }
+    puts result
   end
 
   def victory

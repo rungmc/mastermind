@@ -10,6 +10,14 @@ class CpuGuess
   end
 
   def play
+    input_code
+    @answer = gets.chomp.split('').map! { |str| str.to_i }
+
+    until valid_input?(@answer)
+      invalid_input
+      @answer = gets.chomp.split('').map! { |str| str.to_i }
+    end
+
     until @attempts.zero?
       game_loop
       break if won?
@@ -27,10 +35,19 @@ class CpuGuess
   def game_loop
     attempts_remaining(@attempts)
     @attempts -= 1
-    @guess = [num_gen.rand(1..6),num_gen.rand(1..6),
-      num_gen.rand(1..6),num_gen.rand(1..6)]
+    @guess = cpu_ai
 
     draw_result(@guess, KeyPegs.new.generate(@guess.dup, @answer.dup))
+  end
+
+  def cpu_ai
+    sleep(1)
+    [@num_gen.rand(1..6),@num_gen.rand(1..6),
+      @num_gen.rand(1..6),@num_gen.rand(1..6)]
+  end
+
+  def valid_input?(input)
+    input.all? { |i| i.between?(1,6) } && input.size == 4
   end
 
   def won?

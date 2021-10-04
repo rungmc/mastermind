@@ -18,13 +18,13 @@ class KeyPegs
 
   def exact_match(guess, answer)
     matched = []
-    for i in 0..4
-      if guess.key_pegs[i] == answer.key_pegs[i]
-        matched += answer.key_pegs[i]
+    for i in 0..3
+      if guess[i] == answer[i]
+        matched += answer[i]
         @key_pegs += @exact_symbol
       end
     end
-    matched.each { |i| answer.key_pegs.delete(i) }
+    matched.each { |i| answer.delete(i) }
     nil
   end
 
